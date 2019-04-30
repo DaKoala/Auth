@@ -1,6 +1,11 @@
 import admin = require('firebase-admin');
 import express = require('express');
+import bodyParser = require('body-parser');
 const serviceAccount = require('./private.json');
+
+const app = express();
+
+app.use(bodyParser.json());
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -68,3 +73,38 @@ class UserManager {
         }
     }
 }
+
+const manager = new UserManager();
+
+app.get('/user', async (req, res) => {
+    const { username, password } = req.query;
+    try {
+        await manager.authorize(username, password);
+        res.send({
+            'status': 200,
+            'msg': 'ok',
+        });
+    } catch (e) {
+        res.send({
+            'status': 403,
+            'msg': 'Incorrect username or password!',
+        });
+    }
+});
+
+app.post('/user', async (req, res) => {
+    const { username, password } = req.body;
+    try {
+        await manager.isRegistered(username);
+        await manager.register(username, password);
+        res.send({
+            'status': 200,
+            'msg': 'ok',
+        });
+    } catch (e) {
+        res.send({
+            'status': 400,
+            'msg': 'Existing username.',
+        });
+    }
+});
