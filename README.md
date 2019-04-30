@@ -9,7 +9,5 @@ A simple registration / authorization example.
 ```bash
 npm install # install all dependencies
 
-npm build # compile TypeScript files to JavaScript files
-
 npm start # Start application
 ```

@@ -1,4 +1,4 @@
-import admin = require('firebase-admin');
+const admin = require('firebase-admin');
 const serviceAccount = require('../../private.json');
 
 admin.initializeApp({
@@ -8,14 +8,12 @@ admin.initializeApp({
 
 const db = admin.database();
 
-module.exports = class Database<T> {
-    public table: admin.database.Reference;
-
-    public constructor(tableName: string) {
+module.exports = class Database {
+    constructor(tableName) {
         this.table = db.ref(tableName);
     }
 
-    public async has(key: string): Promise<void> {
+    async has(key) {
         const snapshot = await this.table.once('value');
         if (snapshot.val()[key] !== undefined) {
             return;
@@ -24,12 +22,12 @@ module.exports = class Database<T> {
         }
     }
 
-    public async get(key: string): Promise<T | void> {
+    async get(key) {
         const snapshot = await this.table.once('value');
         return snapshot.val()[key];
     }
 
-    public set(key: string, value: T): Promise<void> {
+    set(key, value) {
         return this.table.set({
             [key]: value,
         });

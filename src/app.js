@@ -1,6 +1,6 @@
-import express = require('express');
-import bodyParser = require('body-parser');
-import path = require('path');
+const express = require('express');
+const bodyParser = require('body-parser');
+const path = require('path');
 const manager = require('./database/user');
 
 const app = express();

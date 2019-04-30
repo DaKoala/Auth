@@ -1,8 +1,4 @@
 # Created by .ignore support plugin (hsz.mobi)
-# .js file
-*.js
-*.js.map
-
 # Primary key
 private.json
 
