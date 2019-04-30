@@ -1,10 +1,13 @@
 import express = require('express');
 import bodyParser = require('body-parser');
+import path = require('path');
 const manager = require('./database/user');
 
 const app = express();
 
 app.use(bodyParser.json());
+
+app.use(express.static(path.resolve(__dirname, 'dist')));
 
 app.use((req, res, next) => {
     res.set('Access-Control-Allow-Origin', '*');
