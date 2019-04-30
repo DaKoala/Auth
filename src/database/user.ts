@@ -10,8 +10,13 @@ class UserManager {
     // @ts-ignore
     private table = new Database<Account>('users');
 
-    public isRegistered(username: string): Promise<void> {
-        return this.table.has(username);
+    public async isRegistered(username: string): Promise<void> {
+        try {
+            await this.table.has(username);
+            return Promise.reject();
+        } catch (e) {
+            return Promise.resolve();
+        }
     }
 
     public register(username: string, password: string): Promise<void> {

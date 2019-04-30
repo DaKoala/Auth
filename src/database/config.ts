@@ -1,5 +1,5 @@
 import admin = require('firebase-admin');
-const serviceAccount = require('../private.json');
+const serviceAccount = require('../../private.json');
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -31,7 +31,7 @@ module.exports = class Database<T> {
 
     public set(key: string, value: T): Promise<void> {
         return this.table.set({
-            key: value,
+            [key]: value,
         });
     }
 }

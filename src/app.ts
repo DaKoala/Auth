@@ -6,6 +6,12 @@ const app = express();
 
 app.use(bodyParser.json());
 
+app.use((req, res, next) => {
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Headers', 'content-type');
+    next();
+});
+
 app.get('/user', async (req, res) => {
     const { username, password } = req.query;
     try {
@@ -37,4 +43,9 @@ app.post('/user', async (req, res) => {
             'msg': 'Existing username.',
         });
     }
+});
+
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log('App is running on port %s', 3000);
 });
